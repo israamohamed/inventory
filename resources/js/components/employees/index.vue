@@ -133,6 +133,8 @@ export default {
                             this.employees = this.employees.filter(employee => {
                                     return employee.id != id;
                                 });
+
+                            this.show_table = this.employees.length > 1 ? true : false;
                             Swal.fire(
                                 'Deleted!',
                                 res.data.message,

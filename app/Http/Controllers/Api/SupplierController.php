@@ -4,15 +4,15 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Employee;
+use App\Models\Supplier;
 
-class EmployeeController extends Controller
+class SupplierController extends Controller
 {
  
     public function index()
     {
-        $employees = Employee::search()->get();
-        return responseJson(1 , 'success' , $employees);
+        $suppliers = Supplier::search()->get();
+        return responseJson(1 , 'success' , $suppliers);
     }
 
     public function store(Request $request)
@@ -21,9 +21,7 @@ class EmployeeController extends Controller
             'name'         => 'required|max:255',
             'email'        => 'nullable|email|max:255',
             'phone'        => 'nullable|max:255',
-            'joining_date' => 'nullable|date|date_format:Y-m-d',
-            'salary'       => 'nullable|numeric',
-            'nid'          => 'max:255',
+            'shop_name'    => 'nullable|max:255',      
             //'image'        => 'nullable|image'
         ];
         $validator = validator()->make($request->all() , $rules );
@@ -33,22 +31,22 @@ class EmployeeController extends Controller
             return responseJson(0 , $validator->errors()->first() ,  $validator->errors() );
         }
 
-        $employee = Employee::create($request->all());
+        $supplier = Supplier::create($request->all());
 
-        $employee->uploadImage('employees');
+        $supplier->uploadImage('suppliers');
 
-        return responseJson(1 , 'Employee is added successfully');
+        return responseJson(1 , 'supplier is added successfully');
     }
 
     public function show($id)
     {
-        $employee = Employee::find($id);
-        if(!$employee)
+        $supplier = Supplier::find($id);
+        if(!$supplier)
         {
-            return responseJson(0 , 'No Employee Data');
+            return responseJson(0 , 'No supplier Data');
         }
 
-        return responseJson(1 , 'success' , $employee);
+        return responseJson(1 , 'success' , $supplier);
     }
 
   
@@ -58,9 +56,7 @@ class EmployeeController extends Controller
             'name'         => 'required|max:255',
             'email'        => 'nullable|email|max:255',
             'phone'        => 'nullable|max:255',
-            'joining_date' => 'nullable|date|date_format:Y-m-d',
-            'salary'       => 'nullable|numeric',
-            'nid'          => 'max:255',
+            'shop_name'    => 'nullable|max:255',      
             //'image'        => 'nullable|image'
         ];
         $validator = validator()->make($request->all() , $rules );
@@ -70,18 +66,17 @@ class EmployeeController extends Controller
             return responseJson(0 , $validator->errors()->first() ,  $validator->errors() );
         }
 
-        $employee = Employee::find($id);
-        
-        if(!$employee)
+        $supplier = Supplier::find($id);
+        if(!$supplier)
         {
-            return responseJson(0 , 'No Employee Data');
+            return responseJson(0 , 'No supplier Data');
         }
 
-        $employee->update($request->all());
+        $supplier->update($request->all());
 
-        $employee->updateImage('employees');
+        $supplier->updateImage('suppliers');
 
-        return responseJson(1 , 'Employee is updated successfully');
+        return responseJson(1 , 'supplier is updated successfully');
     }
 
     /**
@@ -92,15 +87,15 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        $employee = Employee::find($id);
-        if(!$employee)
+        $supplier = Supplier::find($id);
+        if(!$supplier)
         {
-            return responseJson(0 , 'No Employee Data');
+            return responseJson(0 , 'No supplier Data');
         }
 
-        $employee->deleteImage();
-        $employee->delete();
+        $supplier->deleteImage();
+        $supplier->delete();
 
-        return responseJson(1 , 'Employee is deleted successfully');
+        return responseJson(1 , 'supplier is deleted successfully');
     }
 }

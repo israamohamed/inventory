@@ -9,7 +9,7 @@
   <meta name="author" content="">
   <link rel="stylesheet" href="{{asset('css/app.css')}}">
   <link href="{{asset('dashboard/img/logo/logo.png')}}" rel="icon">
-  <title>RuangAdmin - Dashboard</title>
+  <title>Inventory - Dashboard</title>
   <link href="{{asset('dashboard/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
   <link href="{{asset('dashboard/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
   <link href="{{asset('dashboard/css/ruang-admin.min.css')}}" rel="stylesheet">
@@ -63,59 +63,44 @@
             </div>
           </div>
         </li>
+
+        <!-- Suppliers -->
         <li class="nav-item">
-          <a class="nav-link" href="forms.html">
-            <i class="fab fa-fw fa-wpforms"></i>
-            <span>Forms</span>
+          <a class="nav-link collapsed" href = "#" data-toggle="collapse" data-target="#collapseSuppliers" aria-expanded="true" aria-controls="collapseSuppliers">
+            <i class="far fa-fw fa-window-maximize"></i>
+            <span>Suppliers</span>
           </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable" aria-expanded="true"
-            aria-controls="collapseTable">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Tables</span>
-          </a>
-          <div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
+
+          <div id="collapseSuppliers" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Tables</h6>
-              <a class="collapse-item" href="simple-tables.html">Simple Tables</a>
-              <a class="collapse-item" href="datatables.html">DataTables</a>
+              <h6 class="collapse-header">Suppliers</h6>
+              <router-link class="collapse-item" to="/supplier">Suppliers</router-link>
+              <router-link class="collapse-item" to="/supplier/create">Add Supplier</router-link>
             </div>
           </div>
         </li>
+       
+        
+
+        <!-- Categories -->
         <li class="nav-item">
-          <a class="nav-link" href="ui-colors.html">
-            <i class="fas fa-fw fa-palette"></i>
-            <span>UI Colors</span>
+          <a class="nav-link collapsed" href = "#" data-toggle="collapse" data-target="#collapseCategories" aria-expanded="true" aria-controls="collapseCategories">
+            <i class="far fa-fw fa-window-maximize"></i>
+            <span>Categories</span>
           </a>
-        </li>
-        <hr class="sidebar-divider">
-        <div class="sidebar-heading">
-          Examples
-        </div>
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePage" aria-expanded="true"
-            aria-controls="collapsePage">
-            <i class="fas fa-fw fa-columns"></i>
-            <span>Pages</span>
-          </a>
-          <div id="collapsePage" class="collapse" aria-labelledby="headingPage" data-parent="#accordionSidebar">
+
+          <div id="collapseCategories" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Example Pages</h6>
-              <a class="collapse-item" href="login.html">Login</a>
-              <a class="collapse-item" href="register.html">Register</a>
-              <a class="collapse-item" href="404.html">404 Page</a>
-              <a class="collapse-item" href="blank.html">Blank Page</a>
+              <h6 class="collapse-header">Categories</h6>
+              <router-link class="collapse-item" to="/category">Categories</router-link>
+              <router-link class="collapse-item" to="/category/create">Add category</router-link>
             </div>
           </div>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="charts.html">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Charts</span>
-          </a>
-        </li>
+
         <hr class="sidebar-divider">
+       
+      
         <div class="version" id="version-ruangadmin"></div>
       </ul>
       <!-- Sidebar -->
