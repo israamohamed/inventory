@@ -37,6 +37,11 @@ window.Toast = Toast;
 import Notification from './Helpers/Notification';
 window.Notification = Notification
 
+window.jQuery = window.$ = require('jquery');
+require('select2');
+
+
+
 const app = new Vue({
     el: '#app',
     data: {

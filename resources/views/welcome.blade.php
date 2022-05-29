@@ -98,6 +98,22 @@
           </div>
         </li>
 
+        <!-- Products -->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href = "#" data-toggle="collapse" data-target="#collapseProducts" aria-expanded="true" aria-controls="collapseProducts">
+            <i class="far fa-fw fa-window-maximize"></i>
+            <span>Products</span>
+          </a>
+
+          <div id="collapseProducts" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <h6 class="collapse-header">Products</h6>
+              <router-link class="collapse-item" to="/product">Products</router-link>
+              <router-link class="collapse-item" to="/product/create">Add Product</router-link>
+            </div>
+          </div>
+        </li>
+
         <hr class="sidebar-divider">
        
       

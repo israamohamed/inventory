@@ -15,6 +15,10 @@ let get_categories = require('./components/categories/index.vue').default;
 let create_category = require('./components/categories/create.vue').default;
 let edit_category = require('./components/categories/edit.vue').default;
 
+let get_products = require('./components/products/index.vue').default;
+let create_product = require('./components/products/create.vue').default;
+let edit_product = require('./components/products/edit.vue').default;
+
 
 
 export const routes = [
@@ -36,4 +40,9 @@ export const routes = [
     { path: '/category'        , component: get_categories   , name: 'category.index' },
     { path: '/category/create' , component: create_category , name: 'category.create' },
     { path: '/category/edit/:id'   , component: edit_category , name: 'category.edit' },
+
+    //products
+    { path: '/product'        , component: get_products   , name: 'product.index' },
+    { path: '/product/create' , component: create_product , name: 'product.create' },
+    { path: '/product/edit/:id'   , component: edit_product , name: 'product.edit' },
   ]
