@@ -19,6 +19,14 @@ let get_products = require('./components/products/index.vue').default;
 let create_product = require('./components/products/create.vue').default;
 let edit_product = require('./components/products/edit.vue').default;
 
+let get_expenses = require('./components/expenses/index.vue').default;
+let create_expense = require('./components/expenses/create.vue').default;
+let edit_expense = require('./components/expenses/edit.vue').default;
+
+let get_employees_for_salaries = require('./components/salaries/get_employees.vue').default;
+let pay_salary = require('./components/salaries/pay_salary.vue').default;
+let get_salaries = require('./components/salaries/index.vue').default;
+
 
 
 export const routes = [
@@ -45,4 +53,14 @@ export const routes = [
     { path: '/product'        , component: get_products   , name: 'product.index' },
     { path: '/product/create' , component: create_product , name: 'product.create' },
     { path: '/product/edit/:id'   , component: edit_product , name: 'product.edit' },
+
+    //expenses
+    { path: '/expense'        , component: get_expenses   , name: 'expense.index' },
+    { path: '/expense/create' , component: create_expense , name: 'expense.create' },
+    { path: '/expense/edit/:id'   , component: edit_expense , name: 'expense.edit' },
+
+    //salaries
+    { path: '/salary/get_employees' , component: get_employees_for_salaries, name: 'salary.get_employees' },
+    { path: '/salary/pay_salary/:id'  , component: pay_salary, name: 'salary.pay_salary'},
+    { path: '/salary'  , component: get_salaries, name: 'salary.index'},
   ]

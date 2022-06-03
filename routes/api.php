@@ -25,4 +25,8 @@ Route::group(['namespace' => 'Api'] , function(){
     Route::apiResource('supplier' , 'SupplierController');
     Route::apiResource('category' , 'CategoryController');
     Route::apiResource('product'  , 'ProductController');
+    Route::apiResource('expense'  , 'ExpenseController');
+
+    Route::apiResource('salary'  , 'SalaryController')->except('store');
+    Route::post('pay_salary/{id}' , 'SalaryController@pay_salary')->name('pay_salary');
 });

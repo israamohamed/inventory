@@ -114,6 +114,38 @@
           </div>
         </li>
 
+        <!-- Expenses -->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href = "#" data-toggle="collapse" data-target="#collapseExpenses" aria-expanded="true" aria-controls="collapseExpenses">
+            <i class="far fa-fw fa-window-maximize"></i>
+            <span>Expenses</span>
+          </a>
+
+          <div id="collapseExpenses" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <h6 class="collapse-header">Expenses</h6>
+              <router-link class="collapse-item" to="/expense">Expenses</router-link>
+              <router-link class="collapse-item" to="/expense/create">Add expense</router-link>
+            </div>
+          </div>
+        </li>
+
+        <!-- Salaries -->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href = "#" data-toggle="collapse" data-target="#collapseSalaries" aria-expanded="true" aria-controls="collapseSalaries">
+            <i class="far fa-fw fa-window-maximize"></i>
+            <span>Salaries</span>
+          </a>
+
+          <div id="collapseSalaries" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <h6 class="collapse-header">Salaries</h6>
+              <router-link class="collapse-item" to="/salary/get_employees">Pay Salary</router-link>
+              <router-link class="collapse-item" to="/salary">Salaries</router-link>
+            </div>
+          </div>
+        </li>
+
         <hr class="sidebar-divider">
        
       

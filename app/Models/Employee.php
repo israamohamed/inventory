@@ -30,6 +30,11 @@ class Employee extends Model
         });
    
     }
+
+    public function salaries()
+    {
+        return $this->hasMany('App\Models\Salary');
+    }
     
     
 }
