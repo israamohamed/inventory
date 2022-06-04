@@ -1,55 +1,38 @@
 <template>
 <div>
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">All Salaries</h1>
+            <h1 class="h3 mb-0 text-gray-800">Customers</h1>
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><router-link to = "/home">Home</router-link></li>
-              <li class="breadcrumb-item active" aria-current="page">Salaries</li>
+              <li class="breadcrumb-item active" aria-current="page">Customers</li>
             </ol>
         </div>
 
         
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <input type="text" v-model="search" @keyup = "searchData" class = "form-control" placeholder="Search ..">
-            </div>
-
-            <div class="col-md-3">
-                <input type="date" v-model="date" @change = "searchData" class = "form-control">
-            </div>
-
-            <div class="col-md-3">
-                <select v-model = "month"  class = "form-control" @change = "searchData" >
-                    <option v-for="month in months" :key = "month">{{month}}</option>                
-                </select>
-            </div>
-
-            <div class="col-md-3">
-                <select v-model = "year"  class = "form-control" @change = "searchData" >
-                    <option :key = "new Date().getFullYear()">{{new Date().getFullYear()}}</option>
-                    <option :key = "new Date().getFullYear() + 1">{{new Date().getFullYear() + 1}}</option>                  
-                </select>
             </div>
         </div>
         <br>
 
         <div class="row">
             <div class="col-lg-12 mb-4">
-                <!-- Salaries -->
+                <!-- Customers -->
                 <div class="card">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Salaries</h6>
-                    <router-link to = "/salary/get_employees" class = "btn btn-primary text-white">Add Salary</router-link>
+                    <h6 class="m-0 font-weight-bold text-primary">Customers</h6>
+                    <router-link to = "/customer/create" class = "btn btn-primary text-white">Add Customer</router-link>
                 </div>
                 <div class="table-responsive" v-if = "show_table">
 
                     <table class="table align-items-center table-flush">                  
                         <thead class="thead-light">
                             <tr>
-                                <th>Employee</th>
-                                <th>Month</th>
-                                <th>Date</th>
-                                <th>Salary</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Address</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -58,15 +41,15 @@
                                 <span class="sr-only">Loading...</span>
                             </div>
 
-                            <tr v-for = "salary in salaries">
-                                <td>{{ salary.employee.name }}</td>
-                                <td>{{ salary.month + " " + salary.year }}</td>
-                                <td>{{ salary.date }}</td>
-                                <td style = "font-size: 1.4em;"><span class = "badge badge-success"><b>{{ salary.salary }} EGP</b></span></td>
+                            <tr v-for = "customer in customers">
+                                <td>{{ customer.name }}</td>
+                                <td>{{ customer.email }}</td>
+                                <td>{{ customer.phone }}</td>
+                                <td>{{ customer.address }}</td>
                                 <td>
-                                    <router-link :to = "{name: 'salary.edit' , params: {id : salary.id} }" class="btn btn-info"><i class = "fas fa-edit"></i></router-link>
+                                    <router-link :to = "{name: 'customer.edit' , params: {id : customer.id} }" class="btn btn-info"><i class="fas fa-edit"></i></router-link>
 
-                                                                        <button class="btn btn-danger" @click = "deleteRecord(salary.id)" ><i class="fas fa-trash"></i></button>
+                                    <button class="btn btn-danger" @click = "deleteRecord(customer.id)" ><i class="fas fa-trash"></i></button>
                                 </td>
                             </tr>
                         
@@ -75,7 +58,7 @@
                 </div>
 
                 <div v-if = "!show_table">
-                    <p class = "text-danger text-center">No Salaries Data</p>
+                    <p class = "text-danger text-center">No Customers Data</p>
                 </div>
                 <div class="card-footer"></div>
                 </div>
@@ -88,9 +71,7 @@
 <script>
 export default {
     created() {
-        this.month = this.months[new Date().getMonth()];
-        this.getSalaries();
-        
+        this.getCustomers();
     },
 
     mounted() {
@@ -100,22 +81,18 @@ export default {
             loading: true,
             show_table: true,
             search: '',
-            date: '',
-            month: '',
-            year: new Date().getFullYear(),
-            salaries : [],
-            months: ["January","February","March","April","May","June","July","August","September","October","November","December"],
+            customers : [],
         }
     },
 
     methods : {
-        getSalaries() {
-            let data = {params : {'search':this.search, 'date':this.date, 'month':this.month, 'year':this.year } };
+        getCustomers() {
+            let data = {params : {'search' : this.search } };
 
-            axios.get('api/salary' , data)
+            axios.get('api/customer' , data)
             .then(res => {
-                this.salaries = res.data.data;
-                if(this.salaries.length < 1 )
+                this.customers = res.data.data;
+                if(this.customers.length < 1 )
                 {
                     this.show_table = false;
                 }
@@ -129,10 +106,10 @@ export default {
 
         searchData() {
             this.show_table = true;
-            this.getSalaries();
+            this.getCustomers();
         },
 
-          deleteRecord(id) {
+        deleteRecord(id) {
             Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -144,14 +121,13 @@ export default {
             }).then((result) => {
             if (result.isConfirmed) {
 
-                axios.delete('/api/salary/' + id)
+                axios.delete('/api/customer/' + id)
                     .then(res => {
                         if(res.data.status === 1) {
 
-                            this.salaries = this.salaries.filter(salary => {
-                                    return salary.id != id;
+                            this.customers = this.customers.filter(customer => {
+                                    return customer.id != id;
                                 });
-                            this.show_table = this.salaries.length > 0 ? true : false;
                             Swal.fire(
                                 'Deleted!',
                                 res.data.message,
@@ -172,8 +148,6 @@ export default {
             })
 
         }
-
-      
     }
 }
 </script>

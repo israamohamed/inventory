@@ -52,4 +52,65 @@ class SalaryController extends Controller
 
         return responseJson(1 , 'Salary is added successfully');
     }
+
+    public function show($id)
+    {
+        $salary = Salary::with('employee')->find($id);
+        if(!$salary)
+        {
+            return responseJson(0 , 'No salary Data');
+        }
+
+        return responseJson(1 , 'success' , $salary);
+    }
+
+  
+    public function update(Request $request, $id)
+    {
+        $rules = [
+            'salary'      => 'required|numeric',
+            'month'       => 'required|max:255',
+            'year'        => 'required|max:255',
+        ];
+        $validator = validator()->make($request->all() , $rules );
+
+        if($validator->fails())
+        {
+            return responseJson(0 , $validator->errors()->first() ,  $validator->errors() );
+        }
+
+        $salary = Salary::find($id);
+        if(!$salary)
+        {
+            return responseJson(0 , 'No salary Data');
+        }
+
+        $exists = Salary::where('employee_id' , $id)->where('month' , $request->month)
+                        ->where('year' , $request->year)
+                        ->where('id' , '!=' , $id)
+                        ->first();
+
+        if($exists)
+        {
+            return responseJson(0 , 'Employee paid the salary for the same month before!');
+        }
+
+
+        $salary->update($request->all());
+
+        return responseJson(1 , 'salary is updated successfully');
+    }
+
+  
+    public function destroy($id)
+    {
+        $salary = Salary::find($id);
+        if(!$salary)
+        {
+            return responseJson(0 , 'No salary Data');
+        }
+        $salary->delete();
+
+        return responseJson(1 , 'salary is deleted successfully');
+    }
 }

@@ -26,7 +26,11 @@ let edit_expense = require('./components/expenses/edit.vue').default;
 let get_employees_for_salaries = require('./components/salaries/get_employees.vue').default;
 let pay_salary = require('./components/salaries/pay_salary.vue').default;
 let get_salaries = require('./components/salaries/index.vue').default;
+let edit_salary = require('./components/salaries/edit.vue').default;
 
+let get_customers = require('./components/customers/index.vue').default;
+let create_customer = require('./components/customers/create.vue').default;
+let edit_customer = require('./components/customers/edit.vue').default;
 
 
 export const routes = [
@@ -63,4 +67,11 @@ export const routes = [
     { path: '/salary/get_employees' , component: get_employees_for_salaries, name: 'salary.get_employees' },
     { path: '/salary/pay_salary/:id'  , component: pay_salary, name: 'salary.pay_salary'},
     { path: '/salary'  , component: get_salaries, name: 'salary.index'},
+    { path: '/salary/edit/:id'   , component: edit_salary , name: 'salary.edit' },
+
+
+    //customers
+    { path: '/customer'        , component: get_customers   , name: 'customer.index' },
+    { path: '/customer/create' , component: create_customer , name: 'customer.create' },
+    { path: '/customer/edit/:id'   , component: edit_customer , name: 'customer.edit' },
   ]

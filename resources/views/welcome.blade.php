@@ -145,6 +145,25 @@
             </div>
           </div>
         </li>
+        
+
+      
+
+        <!-- Customers -->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href = "#" data-toggle="collapse" data-target="#collapseCustomers" aria-expanded="true" aria-controls="collapseCustomers">
+            <i class="far fa-fw fa-window-maximize"></i>
+            <span>Customers</span>
+          </a>
+
+          <div id="collapseCustomers" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <h6 class="collapse-header">Customers</h6>
+              <router-link class="collapse-item" to="/customer">Customers</router-link>
+              <router-link class="collapse-item" to="/customer/create">Add Customer</router-link>
+            </div>
+          </div>
+        </li>
 
         <hr class="sidebar-divider">
        

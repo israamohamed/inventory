@@ -29,4 +29,7 @@ Route::group(['namespace' => 'Api'] , function(){
 
     Route::apiResource('salary'  , 'SalaryController')->except('store');
     Route::post('pay_salary/{id}' , 'SalaryController@pay_salary')->name('pay_salary');
+
+    Route::apiResource('customer'  , 'CustomerController');
+
 });

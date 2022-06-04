@@ -57,7 +57,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="salary" class = "text-primary font-weight-bold">Salary</label>
-                                        <input v-model = "form.salary"  class = "form-control" placeholder="salary"></textarea>
+                                        <input v-model = "form.salary"  class = "form-control" placeholder="salary">
                                         <small class = "text-danger" v-if = "errors.salary"> {{errors.salary[0]}} </small>
                                     </div>
                                 </div>    
