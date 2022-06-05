@@ -86,4 +86,10 @@ class CategoryController extends Controller
 
         return responseJson(1 , 'Category is deleted successfully');
     }
+
+    public function categories_with_products()
+    {
+        $categories = Category::with('products')->get();
+        return responseJson(1 , 'success' , $categories);
+    }
 }

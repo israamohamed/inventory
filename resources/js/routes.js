@@ -32,6 +32,8 @@ let get_customers = require('./components/customers/index.vue').default;
 let create_customer = require('./components/customers/create.vue').default;
 let edit_customer = require('./components/customers/edit.vue').default;
 
+let pos = require('./components/pos/index.vue').default;
+
 
 export const routes = [
     { path: '/', component: login , name: '/' },
@@ -74,4 +76,7 @@ export const routes = [
     { path: '/customer'        , component: get_customers   , name: 'customer.index' },
     { path: '/customer/create' , component: create_customer , name: 'customer.create' },
     { path: '/customer/edit/:id'   , component: edit_customer , name: 'customer.edit' },
+
+    //pos
+    { path: '/pos'        , component: pos   , name: 'pos.index' },
   ]

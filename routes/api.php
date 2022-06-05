@@ -24,6 +24,7 @@ Route::group(['namespace' => 'Api'] , function(){
     Route::apiResource('employee' , 'EmployeeController');
     Route::apiResource('supplier' , 'SupplierController');
     Route::apiResource('category' , 'CategoryController');
+    Route::get('categories_with_products' , 'CategoryController@categories_with_products')->name('categories_with_products');
     Route::apiResource('product'  , 'ProductController');
     Route::apiResource('expense'  , 'ExpenseController');
 

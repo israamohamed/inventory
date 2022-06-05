@@ -47,6 +47,13 @@
             <span>Dashboard</span></router-link>
         </li>
         <hr class="sidebar-divider">
+
+        <li class="nav-item active">
+          <router-link class="nav-link" to = "/pos">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>POS</span></router-link>
+        </li>
+        <hr class="sidebar-divider">
        
         <li class="nav-item">
           <a class="nav-link collapsed" href = "#" data-toggle="collapse" data-target="#collapseBootstrap" aria-expanded="true" aria-controls="collapseBootstrap">
