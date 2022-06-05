@@ -7761,6 +7761,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   created: function created() {
     this.getProducts();
@@ -7774,7 +7796,8 @@ __webpack_require__.r(__webpack_exports__);
       search: '',
       products: [],
       product_categories: [],
-      categories: []
+      categories: [],
+      cart: []
     };
   },
   methods: {
@@ -7812,29 +7835,132 @@ __webpack_require__.r(__webpack_exports__);
       this.show_table = true;
       this.getProducts();
     },
-    deleteRecord: function deleteRecord(id) {
+    addToCart: function addToCart(product) {
       var _this3 = this;
 
-      Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then(function (result) {
-        if (result.isConfirmed) {
-          axios["delete"]('/api/product/' + id).then(function (res) {
-            if (res.data.status === 1) {
-              _this3.products = _this3.products.filter(function (product) {
-                return product.id != id;
-              });
-              Swal.fire('Deleted!', res.data.message, 'success');
-            }
-          })["catch"](function (err) {});
+      if (product.quantity < 1) //out of stock
+        {
+          Notification.error("Product Out Of Stock !");
+          return;
         }
+
+      var item = this.cart.find(function (o) {
+        return o.id === product.id;
       });
+
+      if (item) //edit quantity
+        {
+          //check quantity
+          if (item.quantity + 1 > item.main_quantity) {
+            Notification.error("Available quantity is: " + item.main_quantity);
+            return;
+          }
+
+          item = this.cart.find(function (item, index) {
+            if (item.id === product.id) {
+              var new_item = {
+                id: product.id,
+                name: product.name,
+                quantity: item.quantity + 1,
+                price: product.selling_price,
+                subtotal: (item.quantity + 1) * product.selling_price,
+                main_quantity: product.quantity
+              };
+
+              _this3.cart.splice(index, 1, new_item);
+
+              return true; // stop searching
+            }
+          });
+        } else //create new item
+        {
+          this.cart.push({
+            id: product.id,
+            name: product.name,
+            quantity: 1,
+            price: product.selling_price,
+            subtotal: product.selling_price,
+            main_quantity: product.quantity
+          });
+        }
+    },
+    increment: function increment(product) {
+      var _this4 = this;
+
+      var item = this.cart.find(function (o) {
+        return o.id === product.id;
+      });
+
+      if (item) //edit quantity
+        {
+          //check quantity
+          if (item.quantity + 1 > item.main_quantity) {
+            Notification.error("Available quantity is: " + item.main_quantity);
+            return;
+          }
+
+          item = this.cart.find(function (item, index) {
+            if (item.id === product.id) {
+              var new_item = {
+                id: product.id,
+                name: product.name,
+                quantity: item.quantity + 1,
+                price: product.price,
+                subtotal: (item.quantity + 1) * product.price,
+                main_quantity: product.main_quantity
+              };
+
+              _this4.cart.splice(index, 1, new_item);
+
+              return true; // stop searching
+            }
+          });
+        }
+    },
+    decrement: function decrement(product) {
+      var _this5 = this;
+
+      var item = this.cart.find(function (o) {
+        return o.id === product.id;
+      });
+
+      if (item && item.quantity > 1) //edit quantity
+        {
+          item = this.cart.find(function (item, index) {
+            if (item.id === product.id) {
+              var new_item = {
+                id: product.id,
+                name: product.name,
+                quantity: item.quantity - 1,
+                price: product.price,
+                subtotal: (item.quantity - 1) * product.price,
+                main_quantity: product.main_quantity
+              };
+
+              _this5.cart.splice(index, 1, new_item);
+
+              return true; // stop searching
+            }
+          });
+        }
+    },
+    remove: function remove(product) {
+      var _this6 = this;
+
+      var item = this.cart.find(function (o) {
+        return o.id === product.id;
+      });
+
+      if (item) //edit quantity
+        {
+          item = this.cart.find(function (item, index) {
+            if (item.id === product.id) {
+              _this6.cart.splice(index, 1);
+
+              return true; // stop searching
+            }
+          });
+        }
     }
   }
 });
@@ -15346,7 +15472,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.product-image {\r\n    height: 80px;\r\n    width: 80px;\r\n    margin: auto;\n}\n.products_section .card-body {\r\n    \r\n    margin-top: 15px;\r\n    text-align: center;\n}\n.products_section .card-title {\r\n    font-size: 0.9em;\r\n    font-weight: bold ;\r\n\r\n    height: 35px;\r\n    overflow: hidden;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.product-image {\r\n    height: 80px;\r\n    width: 80px;\r\n    margin: auto;\n}\n.products_section .card-body {\r\n    \r\n    margin-top: 15px;\r\n    text-align: center;\n}\n.products_section .card-title {\r\n    font-size: 0.9em;\r\n    font-weight: bold ;\r\n\r\n    height: 35px;\r\n    overflow: hidden;\n}\n.product_card {\r\n    cursor: pointer;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -65005,9 +65131,81 @@ var render = function () {
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-5" }),
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("table", { staticClass: "table table-bordered" }, [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.cart, function (item) {
+                      return _c("tr", [
+                        _c("td", [_vm._v(_vm._s(item.name))]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "col-md-5" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-success btn-sm",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.increment(item)
+                                },
+                              },
+                            },
+                            [_vm._v("+")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            staticStyle: { width: "50px" },
+                            attrs: { type: "text", readonly: "" },
+                            domProps: { value: item.quantity },
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-danger btn-sm",
+                              attrs: { disabled: item.quantity <= 1 },
+                              on: {
+                                click: function ($event) {
+                                  return _vm.decrement(item)
+                                },
+                              },
+                            },
+                            [_vm._v("-")]
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.price))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.subtotal))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.remove(item)
+                                },
+                              },
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fas fa-trash text-danger",
+                              }),
+                            ]
+                          ),
+                        ]),
+                      ])
+                    }),
+                    0
+                  ),
+                ]),
+              ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-7" }, [
+              _c("div", { staticClass: "col-md-6" }, [
                 _c(
                   "ul",
                   {
@@ -65015,7 +65213,7 @@ var render = function () {
                     attrs: { id: "myTab", role: "tablist" },
                   },
                   [
-                    _vm._m(1),
+                    _vm._m(2),
                     _vm._v(" "),
                     _vm._l(_vm.categories, function (category) {
                       return _c(
@@ -65092,7 +65290,15 @@ var render = function () {
                           _vm._l(_vm.products, function (product) {
                             return _c(
                               "div",
-                              { staticClass: "col-lg-3 col-md-6 mb-2" },
+                              {
+                                staticClass:
+                                  "col-lg-3 col-md-6 mb-2 product_card",
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.addToCart(product)
+                                  },
+                                },
+                              },
                               [
                                 _c("div", { staticClass: "card p-1" }, [
                                   _c("img", {
@@ -65161,7 +65367,15 @@ var render = function () {
                             _vm._l(category.products, function (product) {
                               return _c(
                                 "div",
-                                { staticClass: "col-lg-3 col-md-6 mb-2" },
+                                {
+                                  staticClass:
+                                    "col-lg-3 col-md-6 mb-2 product_card",
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.addToCart(product)
+                                    },
+                                  },
+                                },
                                 [
                                   _c("div", { staticClass: "card p-1" }, [
                                     _c("img", {
@@ -65243,6 +65457,24 @@ var staticRenderFns = [
         ]),
       ]
     )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Quantity")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Price")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Subtotal")]),
+        _vm._v(" "),
+        _c("th"),
+      ]),
+    ])
   },
   function () {
     var _vm = this

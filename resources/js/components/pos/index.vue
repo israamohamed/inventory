@@ -21,12 +21,35 @@
 
                         <div class="row">
                             <!-- table -->
-                            <div class = "col-md-5">
-
+                            <div class = "col-md-6">
+                                <table class = "table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
+                                            <th>Subtotal</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for = "item in cart">
+                                            <td>{{item.name}}</td>
+                                            <td class = "col-md-5">
+                                                <button class = "btn btn-success btn-sm" @click = "increment(item)">+</button>
+                                                <input type="text" class = "" :value = "item.quantity" readonly style = "width: 50px;">
+                                                <button class = "btn btn-danger btn-sm" @click = "decrement(item)" :disabled = "item.quantity <= 1">-</button>
+                                            </td>
+                                            <td>{{item.price}}</td>
+                                            <td>{{item.subtotal}}</td>
+                                            <td><button class = "btn" @click = "remove(item)"><i class = "fas fa-trash text-danger"></i></button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
 
                             <!-- products-->
-                             <div class = "col-md-7">
+                             <div class = "col-md-6">
                                  <!-- nav tabs -->
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item" role="presentation">
@@ -45,7 +68,7 @@
                                         <input type="text" v-model = "search" class = "form-control mb-1" @keyup = "searchData" placeholder="Search">
 
                                         <div class="row products_section">
-                                            <div v-for = "product in products" class="col-lg-3 col-md-6 mb-2">
+                                            <div v-for = "product in products" class="col-lg-3 col-md-6 mb-2 product_card" @click = "addToCart(product)">
                                                 <div class="card p-1">
                                                     <img class="card-img-top product-image" :src="product.image_path">
                                                     <div class="card-body" style = "padding:0">
@@ -63,14 +86,13 @@
                                          <!-- search -->
                                         <!-- <input type="text" v-model = "search" class = "form-control mb-1" @keyup = "searchData" placeholder="Search"> -->
                                         <div class="row products_section">
-                                            <div v-for = "product in category.products" class="col-lg-3 col-md-6 mb-2">
+                                            <div v-for = "product in category.products" class="col-lg-3 col-md-6 mb-2 product_card" @click = "addToCart(product)">
                                                 <div class="card p-1">
-                                                  
                                                     <img class="card-img-top product-image" :src="product.image_path">
                                                     <div class="card-body" style = "padding:0">
-                                                        <h6 class="card-title">{{product.name}}</h6>
+                                                        <h6 class="card-title">{{product.name}}</h6>     
                                                         <span class = "badge badge-success" v-if = "product.quantity > 0">Available {{product.quantity}}</span>      
-                                                        <span class = "badge badge-danger" v-else>Out Of Stock</span>   
+                                                        <span class = "badge badge-danger" v-else>Out Of Stock</span>                  
                                                     </div>
                                                 </div>
                                             </div>
@@ -108,6 +130,7 @@ export default {
             products : [],
             product_categories: [],
             categories: [],
+            cart: [],
         }
     },
 
@@ -148,45 +171,120 @@ export default {
             this.getProducts();
         },
 
-        deleteRecord(id) {
-            Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-            if (result.isConfirmed) {
-
-                axios.delete('/api/product/' + id)
-                    .then(res => {
-                        if(res.data.status === 1) {
-
-                            this.products = this.products.filter(product => {
-                                    return product.id != id;
-                                });
-                            Swal.fire(
-                                'Deleted!',
-                                res.data.message,
-                                'success'
-                            )
-                            
-                            
-                        }
-                         
-
-                    })
-                    .catch(err => {
-
-                    })
-                
-               
+        addToCart(product) {
+            if(product.quantity < 1) //out of stock
+            {
+                Notification.error("Product Out Of Stock !");
+                return ;
             }
-            })
 
-        }
+            let item = this.cart.find(o => o.id === product.id);
+        
+            if(item) //edit quantity
+            {
+                //check quantity
+                if( (item.quantity + 1) >  item.main_quantity )
+                {
+                    Notification.error("Available quantity is: " + item.main_quantity);
+                    return ;
+                }
+                item = this.cart.find((item, index) => {
+                    if (item.id === product.id) 
+                    {
+                        let new_item = { 
+                            id:   product.id,
+                            name: product.name,
+                            quantity: item.quantity + 1,
+                            price: product.selling_price,
+                            subtotal: (item.quantity + 1) * product.selling_price,
+                            main_quantity: product.quantity,
+                        };
+                        this.cart.splice(index, 1, new_item)
+                        return true; // stop searching
+                    }
+                });
+            }
+            else  //create new item
+            {
+                  this.cart.push({
+                    id:   product.id,
+                    name: product.name,
+                    quantity: 1,
+                    price: product.selling_price,
+                    subtotal: product.selling_price,
+                    main_quantity: product.quantity,
+                });
+            }
+          
+
+        },
+
+
+         increment(product) {
+            let item = this.cart.find(o => o.id === product.id);
+            if(item) //edit quantity
+            {
+                //check quantity
+                if( (item.quantity + 1) >  item.main_quantity )
+                {
+                    Notification.error("Available quantity is: " + item.main_quantity);
+                    return ;
+                }
+                item = this.cart.find((item, index) => {
+                    if (item.id === product.id) 
+                    {
+                        let new_item = { 
+                            id:   product.id,
+                            name: product.name,
+                            quantity: item.quantity + 1,
+                            price: product.price,
+                            subtotal: (item.quantity + 1) * product.price,
+                            main_quantity: product.main_quantity,
+                        };
+                        this.cart.splice(index, 1, new_item)
+                        return true; // stop searching
+                    }
+                });
+            }
+        },
+
+        decrement(product) {
+            let item = this.cart.find(o => o.id === product.id);
+            if(item && item.quantity > 1 ) //edit quantity
+            {
+                item = this.cart.find((item, index) => {
+                    if (item.id === product.id) 
+                    {
+                        let new_item = { 
+                            id:   product.id,
+                            name: product.name,
+                            quantity: item.quantity - 1,
+                            price: product.price,
+                            subtotal: (item.quantity - 1) * product.price,
+                            main_quantity: product.main_quantity,
+                        };
+                        this.cart.splice(index, 1, new_item)
+                        return true; // stop searching
+                    }
+                });
+            }
+        },
+
+        remove(product) {
+            let item = this.cart.find(o => o.id === product.id);
+            if(item) //edit quantity
+            {
+                item = this.cart.find((item, index) => {
+                    if (item.id === product.id) 
+                    {
+                        this.cart.splice(index, 1)
+                        return true; // stop searching
+                    }
+                });
+            }
+        },
+
+       
     }
 }
 </script>
@@ -210,5 +308,9 @@ export default {
 
     height: 35px;
     overflow: hidden;
+}
+
+.product_card {
+    cursor: pointer;
 }
 </style>
