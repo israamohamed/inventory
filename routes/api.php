@@ -32,5 +32,6 @@ Route::group(['namespace' => 'Api'] , function(){
     Route::post('pay_salary/{id}' , 'SalaryController@pay_salary')->name('pay_salary');
 
     Route::apiResource('customer'  , 'CustomerController');
+    Route::apiResource('order'  , 'OrderController');
 
 });

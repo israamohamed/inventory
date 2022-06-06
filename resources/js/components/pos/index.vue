@@ -23,6 +23,7 @@
                             <!-- table -->
                             <div class = "col-md-6">       
                                 <table class = "table table-responsive cart_table table-sm">
+                                    <small class = "text-danger" v-if = "errors.products"> {{errors.products[0]}} </small>
 
                                     <p v-if = "cart.length <= 0" class = "bg-gradient-primary text-center text-light p-3">Add Items to Cart</p> 
                                     <thead v-if = "cart.length > 0">
@@ -66,27 +67,35 @@
                                 <ul class="list-group total">
                                     <li class="list-group-item">Quantities: <span class = "total_value">{{ quantities }}</span></li>
 
-                                    <li v-if = "discount > 0" class="list-group-item">Discount: <span class = "total_value">  {{ discount }} EGP </span></li>
+                                    <li v-if = "form.discount > 0" class="list-group-item">Discount: <span class = "total_value">  {{ form.discount }} EGP </span></li>
                                     <li class="list-group-item">Subtotal Price: <span class = "total_value">  {{ subtotalPrice }} <span v-if = "subtotalPrice > 0">EGP</span> </span></li>
                                     <li class="list-group-item">Total Price: <span class = "total_value">  {{ totalPrice }} <span v-if = "totalPrice > 0">EGP</span> </span></li>
                                     
                                 </ul>
 
 
-                                <form>
+                                <form @submit.prevent = "save">
                                     <div class="form-group mt-1">
                                         <label>Customer</label>
-                                         <select class = "form-control">
-                                            <option v-for = "customer in customers" :key = "customer.id">{{customer.name}}</option>
+                                         <select class = "form-control" v-model = "form.customer_id">
+                                            <option :value = "customer.id" v-for = "customer in customers">{{customer.name}}</option>
                                         </select>
+                                        <small class = "text-danger" v-if = "errors.customer_id"> {{errors.customer_id[0]}} </small>
                                     </div>
 
                                     <div class="form-group mt-1">
                                         <label>Discount</label>
-                                        <input type="number" class = "form-control" v-model = "discount" placeholder="Discount">
+                                        <input type="number" class = "form-control" v-model = "form.discount" placeholder="Discount">
+                                        <small class = "text-danger" v-if = "errors.discount"> {{errors.discount[0]}} </small>
                                     </div>
 
-                                    <input type="submit" class = "btn btn-success btn-block" value = "Save" >
+                                    <div class="form-group mt-1">
+                                        <label>Notes</label>
+                                        <textarea class = "form-control" placeholder="Notes" v-model = "form.notes"></textarea>
+                                        <small class = "text-danger" v-if = "errors.notes"> {{errors.notes[0]}} </small>
+                                    </div>
+
+                                    <input type="submit" class = "btn btn-success btn-block" value = "Save" :disabled = "isButtonDisabled" >
                                 </form>                              
                             </div>
 
@@ -157,6 +166,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     created() {
         this.getProducts();
@@ -174,9 +185,15 @@ export default {
             products : [],
             product_categories: [],
             categories: [],
-            cart: [],
-            discount: 0,
+            cart: [],           
             customers: [],
+            isButtonDisabled: false,
+            errors: {},
+            form: {
+                discount: 0,
+                customer_id: null,
+                notes: '',
+            }
         }
     },
 
@@ -347,6 +364,44 @@ export default {
                 });
             }
         },
+
+        save() {
+            if(this.cart.length < 1)
+            {
+                Notification.error("Add Items to cart");
+            }
+            else 
+            {
+                this.isButtonDisabled = true;
+                
+                this.form.products = this.cart
+                
+
+                axios.post('/api/order' , this.form)
+                    .then(res => {
+                        if(res.data.status === 1)
+                        {
+                            this.$router.push({ name : 'home'})
+                            Toast.fire({
+                                icon: 'success',
+                                title: res.data.message
+                            })
+                        }
+                        else 
+                        {
+                            this.loading = false;
+                            this.isButtonDisabled = false;
+                            this.errors = res.data.data;
+                            Notification.error(res.data.message);
+                        }
+
+                    })
+                    .catch(error => {
+                        this.loading = false;
+                        this.isButtonDisabled = false;  
+                    })
+            }
+        }
     },
 
     computed: {
@@ -365,9 +420,9 @@ export default {
             {
                 totalPrice += this.cart[i].subtotal;
             }
-            if(totalPrice > 0 && this.discount && this.discount > 0 )
+            if(totalPrice > 0 && this.form.discount && this.form.discount > 0 )
             {
-                totalPrice -= this.discount;
+                totalPrice -= this.form.discount;
             }
             return totalPrice;
         },
