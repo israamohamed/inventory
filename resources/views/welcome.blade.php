@@ -48,16 +48,16 @@
         </li>
         <hr class="sidebar-divider">
 
-        <li class="nav-item active">
-          <router-link class="nav-link" to = "/pos">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
+        <li class="nav-item active bg-gradient-primary">
+          <router-link class="nav-link text-white" to = "/pos">
+            <i class="fas fa-fw fa-tachometer-alt text-white"></i>
             <span>POS</span></router-link>
         </li>
         <hr class="sidebar-divider">
        
         <li class="nav-item">
           <a class="nav-link collapsed" href = "#" data-toggle="collapse" data-target="#collapseBootstrap" aria-expanded="true" aria-controls="collapseBootstrap">
-            <i class="far fa-fw fa-window-maximize"></i>
+            <i class="fas fa-users"></i>
             <span>Employees</span>
           </a>
 
@@ -92,7 +92,7 @@
         <!-- Categories -->
         <li class="nav-item">
           <a class="nav-link collapsed" href = "#" data-toggle="collapse" data-target="#collapseCategories" aria-expanded="true" aria-controls="collapseCategories">
-            <i class="far fa-fw fa-window-maximize"></i>
+            <i class="fas fa-tasks"></i>
             <span>Categories</span>
           </a>
 
@@ -125,7 +125,7 @@
         <!-- Orders -->
         <li class="nav-item">
           <a class="nav-link collapsed" href = "#" data-toggle="collapse" data-target="#collapseOrders" aria-expanded="true" aria-controls="collapseOrders">
-            <i class="far fa-fw fa-window-maximize"></i>
+            <i class="fas fa-shopping-cart"></i>
             <span>Orders</span>
           </a>
 
@@ -142,7 +142,7 @@
         <!-- Expenses -->
         <li class="nav-item">
           <a class="nav-link collapsed" href = "#" data-toggle="collapse" data-target="#collapseExpenses" aria-expanded="true" aria-controls="collapseExpenses">
-            <i class="far fa-fw fa-window-maximize"></i>
+            <i class="fas fa-money-bill"></i>
             <span>Expenses</span>
           </a>
 
@@ -158,7 +158,7 @@
         <!-- Salaries -->
         <li class="nav-item">
           <a class="nav-link collapsed" href = "#" data-toggle="collapse" data-target="#collapseSalaries" aria-expanded="true" aria-controls="collapseSalaries">
-            <i class="far fa-fw fa-window-maximize"></i>
+            <i class="fas fa-dollar-sign"></i>
             <span>Salaries</span>
           </a>
 

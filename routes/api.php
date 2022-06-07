@@ -34,4 +34,7 @@ Route::group(['namespace' => 'Api'] , function(){
     Route::apiResource('customer'  , 'CustomerController');
     Route::apiResource('order'  , 'OrderController');
 
+    Route::get('statistics'            , 'HomeController@statistics')->name('statistics');
+    Route::get('products_out_of_stock' , 'HomeController@products_out_of_stock')->name('products_out_of_stock');
+
 });
