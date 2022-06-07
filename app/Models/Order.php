@@ -18,12 +18,21 @@ class Order extends Model
 
             if(request()->filled('search'))
             {
-                $q->where('notes' , 'like' , '%' . request()->search . '%'); 
+                $q->where('notes' , 'like' , '%' . request()->search . '%')
+                    ->orWhereHas('customer' , function($q2){
+                        $q2->where('name' , 'like' , '%' . request()->search . '%' );
+
+                    });
             }
 
             if(request()->filled('date'))
             {
                 $q->whereDate('date' ,  request()->date); 
+            }
+
+            if(request()->filled('today_orders'))
+            {
+                $q->whereDate('date' ,  date("Y-m-d")); 
             }
 
             if(request()->filled('customer_id'))
@@ -42,7 +51,7 @@ class Order extends Model
 
     public function products()
     {
-        return $this->belongsToMany('App\Models\Product');
+        return $this->belongsToMany('App\Models\Product')->withPivot('quantity' , 'price');
     }
 
     public function getTotalPriceAttribute()

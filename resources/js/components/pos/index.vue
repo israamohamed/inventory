@@ -381,7 +381,7 @@ export default {
                     .then(res => {
                         if(res.data.status === 1)
                         {
-                            this.$router.push({ name : 'home'})
+                            this.$router.push({ name : 'today_orders'})
                             Toast.fire({
                                 icon: 'success',
                                 title: res.data.message

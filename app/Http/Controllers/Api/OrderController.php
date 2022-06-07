@@ -13,7 +13,7 @@ class OrderController extends Controller
    
     public function index()
     {
-        $orders = Order::latest()->search()->get();
+        $orders = Order::with('customer:id,name')->latest()->search()->get();
         return responseJson(1 , 'success' , $orders);
     }
 
@@ -64,11 +64,16 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::with('customer' , 'products')->find($id);
+
         if(!$order)
         {
             return responseJson(0 , 'No Order Data');
         }
 
+        if($order->customer)
+        {
+            $order->customer->number_of_orders = Order::where('customer_id' , $order->customer_id)->count();
+        }
         return responseJson(1 , 'success' , $order);
     }
 

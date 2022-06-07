@@ -34,6 +34,12 @@ let edit_customer = require('./components/customers/edit.vue').default;
 
 let pos = require('./components/pos/index.vue').default;
 
+let get_orders = require('./components/orders/index.vue').default;
+let get_today_orders = require('./components/orders/today_orders.vue').default;
+let create_order = require('./components/orders/create.vue').default;
+let edit_order = require('./components/orders/edit.vue').default;
+let show_order = require('./components/orders/show.vue').default;
+
 
 export const routes = [
     { path: '/', component: login , name: '/' },
@@ -79,4 +85,11 @@ export const routes = [
 
     //pos
     { path: '/pos'        , component: pos   , name: 'pos.index' },
+
+    //orders
+    { path: '/order'         , component: get_orders         , name: 'order.index' },
+    { path: '/today_orders'  , component: get_today_orders   , name: 'today_orders' },
+    { path: '/order/create'  , component: create_order       , name: 'order.create' },
+    { path: '/order/edit/:id', component: edit_order         , name: 'order.edit' },
+    { path: '/order/show/:id', component: show_order         , name: 'order.show' },
   ]

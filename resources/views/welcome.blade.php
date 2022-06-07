@@ -121,6 +121,24 @@
           </div>
         </li>
 
+        
+        <!-- Orders -->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href = "#" data-toggle="collapse" data-target="#collapseOrders" aria-expanded="true" aria-controls="collapseOrders">
+            <i class="far fa-fw fa-window-maximize"></i>
+            <span>Orders</span>
+          </a>
+
+          <div id="collapseOrders" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <h6 class="collapse-header">Orders</h6>
+              <router-link class="collapse-item" to="/today_orders">Today Orders</router-link>
+              <router-link class="collapse-item" to="/order">Orders</router-link>
+
+            </div>
+          </div>
+        </li>
+
         <!-- Expenses -->
         <li class="nav-item">
           <a class="nav-link collapsed" href = "#" data-toggle="collapse" data-target="#collapseExpenses" aria-expanded="true" aria-controls="collapseExpenses">
