@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "@websanova/vue-auth": "^4.1.12",
         "jquery": "^3.6.0",
         "noty": "^3.2.0-beta-deprecated",
         "select2": "^4.1.0-rc.0",

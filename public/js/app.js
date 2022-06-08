@@ -10645,6 +10645,9 @@ __webpack_require__(/*! select2 */ "./node_modules/select2/dist/js/select2.js");
 var app = new Vue({
   el: '#app',
   data: {},
+  created: function created() {
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
+  },
 
   /*computed : {
        is_auth : function() {

@@ -19,7 +19,7 @@ Route::group([
 
 
 
-Route::group(['namespace' => 'Api'] , function(){
+Route::group(['namespace' => 'Api' , 'middleware' => 'auth'] , function(){
 
     Route::apiResource('employee' , 'EmployeeController');
     Route::apiResource('supplier' , 'SupplierController');
