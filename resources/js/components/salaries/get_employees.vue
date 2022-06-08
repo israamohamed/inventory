@@ -84,6 +84,10 @@ export default {
 
             axios.get('/api/employee' , data)
             .then(res => {
+                if(res.data.status == 0 && res.data.message == "unauthenticated")
+                {
+                    this.$router.push({name : '/'})
+                }
                 this.employees = res.data.data;
                 if(this.employees.length < 1 )
                 {

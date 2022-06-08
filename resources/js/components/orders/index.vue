@@ -131,7 +131,11 @@ export default {
 
                 axios.delete('/api/order/' + id)
                     .then(res => {
-                        if(res.data.status === 1) {
+                        if(res.data.status == 0 && res.data.message == "unauthenticated")
+                        {
+                            this.$router.push({name : '/'})
+                        }
+                        else if(res.data.status === 1) {
 
                             this.orders = this.orders.filter(order => {
                                     return order.id != id;
@@ -141,9 +145,7 @@ export default {
                                 'Deleted!',
                                 res.data.message,
                                 'success'
-                            )
-                            
-                            
+                            )                  
                         }
                          
 

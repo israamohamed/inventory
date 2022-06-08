@@ -11,7 +11,7 @@ class ProductController extends Controller
  
     public function index()
     {
-        $products = Product::with('category:id,name' , 'supplier:id,name')->search()->get();
+        $products = Product::latest()->with('category:id,name' , 'supplier:id,name')->search()->get();
         return responseJson(1 , 'success' , $products);
     }
 

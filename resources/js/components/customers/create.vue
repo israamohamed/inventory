@@ -112,7 +112,11 @@ export default {
 
         axios.post("/api/customer" , this.form)
             .then(res => {
-                if(res.data.status === 1) //success
+                if(res.data.status == 0 && res.data.message == "unauthenticated")
+                {
+                    this.$router.push({name : '/'})
+                }
+                else if(res.data.status === 1) //success
                 {
                     this.$router.push({ name : 'customer.index'})
                     Toast.fire({

@@ -32,9 +32,9 @@
                                   
                                 </form>
                                 <hr>
-                                <div class="text-center">
+                                <!-- <div class="text-center">
                                     <router-link to = "/register" class="font-weight-bold small">Create an Account!</router-link>
-                                </div>
+                                </div> -->
                                 <div class="text-center">
                                 </div>
                             </div>

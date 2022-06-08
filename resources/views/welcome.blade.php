@@ -24,6 +24,19 @@
     }
   </style>
 
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap');
+
+  </style>
+
+  <style>
+    h1,h2,h3,h4,h5,h6,p,span,div,input,select,option,a,li {
+      /* font-family: 'Noto Kufi Arabic', sans-serif; */
+      font-family: 'Roboto Slab', serif;
+    }
+  </style>
+
 
 </head>
 
@@ -108,7 +121,7 @@
         <!-- Products -->
         <li class="nav-item">
           <a class="nav-link collapsed" href = "#" data-toggle="collapse" data-target="#collapseProducts" aria-expanded="true" aria-controls="collapseProducts">
-            <i class="far fa-fw fa-window-maximize"></i>
+            <i class="fab fa-product-hunt"></i>
             <span>Products</span>
           </a>
 
@@ -177,7 +190,7 @@
         <!-- Customers -->
         <li class="nav-item">
           <a class="nav-link collapsed" href = "#" data-toggle="collapse" data-target="#collapseCustomers" aria-expanded="true" aria-controls="collapseCustomers">
-            <i class="far fa-fw fa-window-maximize"></i>
+            <i class="fas fa-user-friends"></i>
             <span>Customers</span>
           </a>
 

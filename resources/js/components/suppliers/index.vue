@@ -127,7 +127,11 @@ export default {
 
                 axios.delete('/api/supplier/' + id)
                     .then(res => {
-                        if(res.data.status === 1) {
+                        if(res.data.status == 0 && res.data.message == "unauthenticated")
+                        {
+                            this.$router.push({name : '/'})
+                        }
+                        else if(res.data.status === 1) {
 
                             this.suppliers = this.suppliers.filter(supplier => {
                                     return supplier.id != id;

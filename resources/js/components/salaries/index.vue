@@ -146,7 +146,11 @@ export default {
 
                 axios.delete('/api/salary/' + id)
                     .then(res => {
-                        if(res.data.status === 1) {
+                        if(res.data.status == 0 && res.data.message == "unauthenticated")
+                        {
+                            this.$router.push({name : '/'})
+                        }
+                        else if(res.data.status === 1) {
 
                             this.salaries = this.salaries.filter(salary => {
                                     return salary.id != id;

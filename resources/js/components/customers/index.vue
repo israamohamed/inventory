@@ -91,6 +91,11 @@ export default {
 
             axios.get('api/customer' , data)
             .then(res => {
+                if(res.data.status == 0 && res.data.message == "unauthenticated")
+                {
+                    this.$router.push({name : '/'})
+                }
+                
                 this.customers = res.data.data;
                 if(this.customers.length < 1 )
                 {

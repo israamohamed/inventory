@@ -94,6 +94,10 @@ export default {
 
             axios.get('api/expense' , data)
             .then(res => {
+                if(res.data.status == 0 && res.data.message == "unauthenticated")
+                {
+                    this.$router.push({name : '/'})
+                }
                 this.expenses = res.data.data;
                 if(this.expenses.length < 1 )
                 {

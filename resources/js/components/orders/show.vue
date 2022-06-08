@@ -115,9 +115,11 @@ export default {
 
             axios.get('/api/order/' + id)
             .then(res => {
-                console.log('hello');
-                console.log(res);
-               if(res.data.status === 1)
+                if(res.data.status == 0 && res.data.message == "unauthenticated")
+                {
+                    this.$router.push({name : '/'})
+                }
+               else if(res.data.status === 1)
                {
                    this.order = res.data.data;
                }

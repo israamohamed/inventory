@@ -35,7 +35,7 @@
                                 <th>Category</th>  
                                 <th>Selling Price</th>
                                 <th>Buying Price</th>
-                                <th>Supplier</th>
+                              
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -49,9 +49,9 @@
                                 <td>{{ product.name }}</td>
                                 <td>{{ product.code }}</td>
                                 <td>{{ product.category ? product.category.name : '' }}</td>
-                                <td>{{ product.selling_price }}</td>
-                                <td>{{ product.buying_price }}</td>
-                                <td>{{ product.supplier ? product.supplier.name : '' }}</td>
+                                <td>{{ product.selling_price }} EGP</td>
+                                <td>{{ product.buying_price }} EGP</td>
+                               
                                 <td>
                                     <router-link :to = "{name: 'product.edit' , params: {id : product.id} }" class="btn btn-info"><i class="fas fa-edit"></i></router-link>
 
@@ -129,7 +129,11 @@ export default {
 
                 axios.delete('/api/product/' + id)
                     .then(res => {
-                        if(res.data.status === 1) {
+                        if(res.data.status == 0 && res.data.message == "unauthenticated")
+                        {
+                            this.$router.push({name : '/'})
+                        }
+                        else if(res.data.status === 1) {
 
                             this.products = this.products.filter(product => {
                                     return product.id != id;

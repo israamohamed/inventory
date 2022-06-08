@@ -107,7 +107,7 @@
 
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="customFile" @change="onFileSelected">
-                                            <label class="custom-file-label text-info font-weight-bold" for="customFile">Profile Picture</label>
+                                            <label class="custom-file-label text-info font-weight-bold" for="customFile">Product Image</label>
                                             <small class = "text-danger" v-if = "errors.image"> {{errors.image[0]}} </small>
                                         </div>
                                       
@@ -198,6 +198,10 @@ export default {
         getCategories() {
             axios.get('/api/category')
             .then(res => {
+                if(res.data.status == 0 && res.data.message == "unauthenticated")
+                {
+                    this.$router.push({name : '/'})
+                }
                 this.categories = res.data.data;
             })
             .catch(error => {

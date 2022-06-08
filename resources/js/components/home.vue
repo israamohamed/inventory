@@ -171,6 +171,10 @@ export default {
     statistics() {
       axios.get('/api/statistics')
             .then(res => {
+              if(res.data.status == 0 && res.data.message == "unauthenticated")
+              {
+                this.$router.push({name : '/'})
+              }
               this.dashboard = res.data.data;
             })
             .catch(error => {

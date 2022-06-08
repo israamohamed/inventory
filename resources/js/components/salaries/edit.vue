@@ -110,6 +110,10 @@ export default {
             let id = this.$route.params.id;
             axios.get('/api/salary/' + id)
                 .then(res => {
+                    if(res.data.status == 0 && res.data.message == "unauthenticated")
+                    {
+                        this.$router.push({name : '/'})
+                    }
                     if(res.data.status === 1)
                     {
                         this.form = res.data.data;

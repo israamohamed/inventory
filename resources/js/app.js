@@ -48,7 +48,8 @@ const app = new Vue({
 
     },
     created() {
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
+
     },
     /*computed : {
 

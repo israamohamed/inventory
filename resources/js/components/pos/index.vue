@@ -202,6 +202,11 @@ export default {
             let data = {params : {'search' : this.search } };
             axios.get('api/product' , data)
             .then(res => {
+                if(res.data.status == 0 && res.data.message == "unauthenticated")
+                {
+                    this.$router.push({name : '/'})
+                }
+                
                 this.products = res.data.data;
                 if(this.products.length < 1 )
                 {

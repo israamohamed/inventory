@@ -85,6 +85,10 @@ export default {
 
             axios.get('api/category' , data)
             .then(res => {
+                if(res.data.status == 0 && res.data.message == "unauthenticated")
+                {
+                    this.$router.push({name : '/'})
+                }
                 this.categories = res.data.data;
                 if(this.categories.length < 1 )
                 {
